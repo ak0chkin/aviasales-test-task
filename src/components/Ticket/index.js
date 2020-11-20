@@ -12,9 +12,9 @@ class Ticket extends React.Component {
         const filter = this.props.filter
             .filter(item => item.checked)
             .map(item => item.steps);
-        console.log(filter);
         const filteredTickets = filter.includes('all') ? this.props.tickets : this.props.tickets.filter(({segments}) => segments.every(({stops}) => filter.includes(stops.length)));
-        const firstFive = filteredTickets.slice(0, 5);
+        const sortedTickets = filteredTickets.sort((a, b) => this.props.sorting === 'price' ? a.price - b.price : (a.segments.reduce((acc, curr) => acc.duration + curr.duration) - b.segments.reduce((acc, curr) => acc.duration + curr.duration)));
+        const firstFive = sortedTickets.slice(0, 5);
         const tickets = firstFive.map(({carrier, price, segments}, idx) => (
             <div className="ticket" key={idx}>
                 <div className="ticket__header segment">
@@ -41,8 +41,8 @@ class Ticket extends React.Component {
                             </div>
                             <div className="segment__item segment__item_right">
                                 <div
-                                    className="segment__title">{`${stops.length} ${['ПЕРЕСАДКА', 'ПЕРЕСАДКИ', 'ПЕРЕСАДОК'][(stops.length % 100 > 4 && stops.length % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(stops.length % 10 < 5) ? stops.length % 10 : 5]]}`}</div>
-                                <div className="segment__data">{stops.join(',')}</div>
+                                    className="segment__title">{`${stops.length} ${['Пересадка', 'Пересадки', 'Пересадок'][(stops.length % 100 > 4 && stops.length % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(stops.length % 10 < 5) ? stops.length % 10 : 5]]}`}</div>
+                                <div className="segment__data">{stops.join(', ')}</div>
                             </div>
                         </div>
                     )
@@ -50,7 +50,7 @@ class Ticket extends React.Component {
             </div>
         ));
         return (
-            <div>
+            <div className="ticket-wrap">
                 {tickets}
             </div>
         );

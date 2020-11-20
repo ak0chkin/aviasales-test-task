@@ -2,6 +2,7 @@ import React from 'react';
 import './index.css';
 import Ticket from "../Ticket";
 import Filter from "../Filter";
+import Sorting from "../Sorting";
 
 let searchId = '', tickets = [];
 const abortController = new AbortController();
@@ -12,22 +13,24 @@ class App extends React.Component {
         this.state = {
             searchId: '',
             tickets: [],
+            checkedCount: 3,
+            sorting: 'price',
             filter: [{
                 steps: 'all',
                 text: 'Все',
-                checked: true
+                checked: false
             }, {
                 steps: 0,
                 text: 'Без пересадок',
-                checked: false
+                checked: true
             }, {
                 steps: 1,
                 text: '1 пересадка',
-                checked: false
+                checked: true
             }, {
                 steps: 2,
                 text: '2 пересадки',
-                checked: false
+                checked: true
             }, {
                 steps: 3,
                 text: '3 пересадки',
@@ -35,6 +38,7 @@ class App extends React.Component {
             }]
         }
         this.handleFilter = this.handleFilter.bind(this);
+        this.handleSorting = this.handleSorting.bind(this);
     }
 
     async fetchSearchId() {
@@ -75,10 +79,38 @@ class App extends React.Component {
         }
     }
 
+    handleSorting(e) {
+        this.setState({
+            sorting: e.target.id === 'price' ? 'price' : 'speed'
+        });
+    }
+
     handleFilter(e) {
-        this.setState(state => ({
-            filter: state.filter.map(item => item.steps == e.target.value ? {...item, checked: e.target.checked} : item)
-        }));
+
+        this.setState(state => {
+            if (e.target.value === 'all') {
+                return {
+                    filter: state.filter.map(item => ({...item, checked: e.target.checked})),
+                    checkedCount: e.target.checked ? 4 : 0
+                }
+            }
+            if ((state.checkedCount + (e.target.checked ? 1 : -1)) === 4) {
+                return {
+                    filter: state.filter.map(item => ({...item, checked: true})),
+                    checkedCount: 4
+                }
+            }
+            return {
+                filter: state.filter.map(item => item.steps === 'all' ? {
+                    ...item,
+                    checked: false
+                } : item.steps == e.target.value ? {
+                    ...item,
+                    checked: e.target.checked
+                } : item),
+                checkedCount: (state.checkedCount + (e.target.checked ? 1 : -1))
+            }
+        });
     }
 
     componentDidMount() {
@@ -96,8 +128,12 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <Filter filter={this.state.filter} onChange={this.handleFilter} />
-                <Ticket searchId={this.state.searchId} tickets={this.state.tickets} filter={this.state.filter}/>
+                <Filter filter={this.state.filter} onChange={this.handleFilter}/>
+                <div className="app-content">
+                    <Sorting handleSorting={this.handleSorting} sorting={this.state.sorting}/>
+                    <Ticket searchId={this.state.searchId} tickets={this.state.tickets} filter={this.state.filter}
+                            sorting={this.state.sorting}/>
+                </div>
             </div>
         );
     }

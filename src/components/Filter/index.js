@@ -14,13 +14,17 @@ class Filter extends React.Component {
     render() {
         const filter = this.props.filter.map((item, idx) => (
             <div key={idx} className="checkbox-wrap">
-                <input id={`cb${idx}`} type="checkbox" value={item.steps}
-                       checked={item.checked} onChange={this.props.onChange}/><label htmlFor={`cb${idx}`}>{item.text}</label>
+                <div className="checkbox-wrap__item">
+                    <input id={`cb${idx}`} type="checkbox" value={item.steps}
+                           checked={item.checked} onChange={this.props.onChange}/><label
+                    htmlFor={`cb${idx}`}>{item.text}</label>
+                </div>
+
             </div>
         ));
         return (
             <div className="filter">
-                Количество пересадок
+                <div className="filter__title">Количество пересадок</div>
                 {filter}
             </div>
         );
