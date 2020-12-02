@@ -2,6 +2,8 @@
 
 Тестовое задание [Aviasales](https://github.com/KosyanMedia/test-tasks/tree/master/aviasales_frontend)
 
+## Инструкция по запуску
+
 В каталоге проекта вы можете запустить:
 
 ### `npm install`
