@@ -1,7 +1,12 @@
-# Aviasales-Test-Task
-Тестовое задание aviasales - https://github.com/KosyanMedia/test-tasks/tree/master/aviasales_frontend
+# Aviasales-Test-Task ([Demo](https://ak0chkin.github.io/aviasales-test-task/))
+
+Тестовое задание [Aviasales](https://github.com/KosyanMedia/test-tasks/tree/master/aviasales_frontend)
 
 В каталоге проекта вы можете запустить:
+
+### `npm install`
+
+Устанавливает все зависимости.
 
 ### `npm start`
 
