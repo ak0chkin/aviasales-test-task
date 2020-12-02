@@ -1,7 +1,7 @@
 .ticket {
     border-radius: 5px;
     background: #ffffff;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     margin: 20px;
     padding: 20px;
 }
@@ -46,4 +46,40 @@
     text-transform: uppercase;
 }
 
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
 
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -124;
+    }
+}
+
+.spinner__svg {
+    animation: spin 2s linear infinite;
+    margin: auto;
+    display: block;
+    width: 45px;
+    height: 45px;
+    z-index: 2;
+}
+
+.spinner__circle {
+    stroke: #2196f3;
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+    stroke-width: 4px;
+}
