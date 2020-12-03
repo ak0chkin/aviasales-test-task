@@ -1,7 +1,16 @@
 .App {
     display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    margin: 50px auto 17px auto;
 }
 
 .app-content {
+    display: flex;
+}
+
+.issue-wrap {
     width: 600px;
 }

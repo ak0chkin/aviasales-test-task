@@ -3,6 +3,7 @@ import './index.css';
 import Ticket from "../Ticket";
 import Filter from "../Filter";
 import Sorting from "../Sorting";
+import logo from './logo.svg'
 
 let searchId = '', tickets = [];
 const abortController = new AbortController();
@@ -81,7 +82,7 @@ class App extends React.Component {
 
     handleSorting(e) {
         this.setState({
-            sorting: e.target.id === 'price' ? 'price' : 'speed'
+            sorting: e.target.id
         });
     }
 
@@ -128,11 +129,16 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <Filter filter={this.state.filter} onChange={this.handleFilter}/>
+                <div className="logo">
+                    <img src={logo} alt="logo"/>
+                </div>
                 <div className="app-content">
-                    <Sorting handleSorting={this.handleSorting} sorting={this.state.sorting}/>
-                    <Ticket searchId={this.state.searchId} tickets={this.state.tickets} filter={this.state.filter}
-                            sorting={this.state.sorting}/>
+                    <Filter filter={this.state.filter} onChange={this.handleFilter}/>
+                    <div className="issue-wrap">
+                        <Sorting handleSorting={this.handleSorting} sorting={this.state.sorting}/>
+                        <Ticket searchId={this.state.searchId} tickets={this.state.tickets} filter={this.state.filter}
+                                sorting={this.state.sorting}/>
+                    </div>
                 </div>
             </div>
         );
